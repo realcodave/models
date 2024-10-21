@@ -1,0 +1,335 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+	
+      <!--Home Video Start-->
+      <section class="home-video-banner parallax" data-jarallax-video="https://www.youtube.com/watch?v=dk9uNWPP7EA">
+		<div class="banner-area">
+		   <div class="banner-caption container">
+			  <div class="container">
+				 <div class="row">
+					<div class="col-md-12 col-sm-12 content-home">
+					   <div class="banner-welcome">
+						  <h4>Over <span>100,000+</span> models waiting for you</h4>
+						  <form>
+							 
+							 <div class="video-banner-input">
+								<input type="text" placeholder="City, State">
+							 </div>
+							 <div class="video-banner-input">
+								<button type="submit"><i class="fa fa-search"></i></button>
+							 </div>
+						  </form>
+						  <!-- <div class="top-search-cat">
+							 <p>Top Search :</p>
+							 <a href="#">Design</a>
+							 <a href="#">Analysis</a>
+							 <a href="#">training</a>
+							 <a href="#">Music</a>
+						  </div> -->
+					   </div>
+					</div>
+				 </div>
+			  </div>
+		   </div>
+		</div>
+	 </section>
+	 <!--Home Video End-->
+	  
+	  
+	 <!-- Top Job Area Start -->
+	 <section class="jobguru-top-job-area section_70">
+		<div class="container">
+		   <div class="row">
+			  <div class="col-md-12">
+				 <div class="site-heading">
+					<h2>top rated <span>Models</span></h2>
+					<p>Discover the Best Models: Elevate Your Brand with Exceptional Talent!</p>
+				 </div>
+			  </div>
+		   </div>
+		   <div class="row">
+			{% for model in models %}
+			  <div class="col-lg-4 col-md-6">
+				<div class="card">
+					<img src="{{model.image.url}}" class="card-img-top" alt="Model Image">
+					<div class="card-body">
+						<h5 class="card-title">Name: {{model.fullname}}</h5>
+						<p class="card-text">{{model.bio|truncatewords:50}}</p>
+						<ul class="list-group list-group-flush">
+							<li class="list-group-item">Date Of Birth: {{model.dob}}</li>
+							<li class="list-group-item">Height: {{model.height}}</li>
+							<li class="list-group-item">Language: {{model.language}}</li>
+							<li class="list-group-item">Hobby: {{model.hobby}}</li>
+							<li class="list-group-item">occupation: {{model.occuption}}</li>
+							<li class="list-group-item">contact: {{model.user.email}}</li>
+						</ul>
+						<a href="#" class="btn btn-primary mt-3">View Profile</a>
+					</div>
+				</div>
+			  </div>
+			{% endfor %}
+		   </div>
+		   <div class="row">
+			  <div class="col-md-12">
+				 <div class="load-more">
+					<a href="#" class="jobguru-btn">browse all jobs</a>
+				 </div>
+			  </div>
+		   </div>
+		</div>
+	 </section>
+	 <!-- Top Job Area End -->
+	  
+	  
+	 <!-- Video Area Start -->
+	 <section class="jobguru-video-area section_100">
+		<div class="container">
+		   <div class="row">
+			  <div class="col-md-12">
+				 <div class="video-container">
+					<h2>Hire experts freelancers today for <br> any job, any time.</h2>
+					<div class="video-btn">
+					   <a class="popup-youtube" href="https://www.youtube.com/watch?v=k-R6AFn9-ek">
+					   <i class="fa fa-play"></i>
+					   how it works
+					   </a>
+					</div>
+				 </div>
+			  </div>
+		   </div>
+		</div>
+	 </section>
+	 <!-- Video Area End -->
+	  
+	  
+	 <!-- Happy Freelancer Start -->
+	 <section class="jobguru-happy-freelancer-area section_70">
+		<div class="container">
+		   <div class="row">
+			  <div class="col-md-12">
+				 <div class="site-heading">
+					<h2>from happy <span>freelancer</span></h2>
+					<p>A better career is out there. We'll help you find it. We're your first step to becoming everything you want to be.</p>
+				 </div>
+			  </div>
+		   </div>
+		   <div class="row">
+			  <div class="col-md-12">
+				 <div class="happy-freelancer-slider owl-carousel">
+					<div class="single-happy-freelancer">
+					   <div class="happy-freelancer-img">
+						  <img src="{% static 'assets/img/testimonial-1.jpg' %}" alt="testimonial 1" />
+					   </div>
+					   <div class="happy-freelancer-text">
+						  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus molestie, justo nec convallis sollicitudin, sapien lorem dictum lacus, non consequat odio ipsum nec est.</p>
+						  <div class="happy-freelancer-info">
+							 <h4>jonathon doe</h4>
+							 <p>web designer</p>
+						  </div>
+					   </div>
+					</div>
+					<div class="single-happy-freelancer">
+					   <div class="happy-freelancer-img">
+						  <img src="{% static 'assets/img/testimonial-2.jpg' %}" alt="testimonial 1" />
+					   </div>
+					   <div class="happy-freelancer-text">
+						  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus molestie, justo nec convallis sollicitudin, sapien lorem dictum lacus, non consequat odio ipsum nec est.</p>
+						  <div class="happy-freelancer-info">
+							 <h4>sraboni neela</h4>
+							 <p>web designer</p>
+						  </div>
+					   </div>
+					</div>
+					<div class="single-happy-freelancer">
+					   <div class="happy-freelancer-img">
+						  <img src="{% static 'assets/img/testimonial-3.jpg' %}" alt="testimonial 1" />
+					   </div>
+					   <div class="happy-freelancer-text">
+						  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus molestie, justo nec convallis sollicitudin, sapien lorem dictum lacus, non consequat odio ipsum nec est.</p>
+						  <div class="happy-freelancer-info">
+							 <h4> asif haider</h4>
+							 <p>web designer</p>
+						  </div>
+					   </div>
+					</div>
+					<div class="single-happy-freelancer">
+					   <div class="happy-freelancer-img">
+						  <img src="{% static 'assets/img/testimonial-2.jpg' %}" alt="testimonial 1" />
+					   </div>
+					   <div class="happy-freelancer-text">
+						  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus molestie, justo nec convallis sollicitudin, sapien lorem dictum lacus, non consequat odio ipsum nec est.</p>
+						  <div class="happy-freelancer-info">
+							 <h4>sandy Pitter</h4>
+							 <p>web designer</p>
+						  </div>
+					   </div>
+					</div>
+				 </div>
+			  </div>
+		   </div>
+		</div>
+	 </section>
+	 <!-- Happy Freelancer End -->
+	  
+	  
+	 <!-- Pricing Area Start -->
+	 <section class="jobguru-pricing-area section_70">
+		<div class="container">
+		   <div class="row">
+			  <div class="col-md-12">
+				 <div class="site-heading">
+					<h2>choose best <span>plan</span></h2>
+					<p>A better career is out there. We'll help you find it. We're your first step to becoming everything you want to be.</p>
+				 </div>
+			  </div>
+		   </div>
+		   <div class="row">
+			  <div class="col-md-4 no-pad-right">
+				 <div class="single-pricing price-basic">
+					<div class="price-heading">
+					   <h3>basic</h3>
+					</div>
+					<div class="price-value">
+					   <h2><i class="fa fa-dollar"></i> 35</h2>
+					   <p>per month</p>
+					</div>
+					<div class="price-btn">
+					   <a href="#" class="jobguru-btn-2">sign up</a>
+					</div>
+					<div class="price-body">
+					   <p>Features of Basic Plan</p>
+					   <p>1 Listing</p>
+					   <p>30 Days Visibility</p>
+					   <p>10 bids per day</p>
+					   <p>Highlighted in Search Results</p>
+					</div>
+				 </div>
+			  </div>
+			  <div class="col-md-4 no-pad-all">
+				 <div class="single-pricing price-standard">
+					<div class="price-heading">
+					   <h3>basic</h3>
+					</div>
+					<div class="price-value">
+					   <h2><i class="fa fa-dollar"></i> 35</h2>
+					   <p>per month</p>
+					</div>
+					<div class="price-btn">
+					   <a href="#" class="jobguru-btn-2">sign up</a>
+					</div>
+					<div class="price-body">
+					   <p>Features of Basic Plan</p>
+					   <p>1 Listing</p>
+					   <p>30 Days Visibility</p>
+					   <p>10 bids per day</p>
+					   <p>Highlighted in Search Results</p>
+					</div>
+				 </div>
+			  </div>
+			  <div class="col-md-4 no-pad-left">
+				 <div class="single-pricing price-premium">
+					<div class="price-heading">
+					   <h3>basic</h3>
+					</div>
+					<div class="price-value">
+					   <h2><i class="fa fa-dollar"></i> 35</h2>
+					   <p>per month</p>
+					</div>
+					<div class="price-btn">
+					   <a href="#" class="jobguru-btn-2">sign up</a>
+					</div>
+					<div class="price-body">
+					   <p>Features of Basic Plan</p>
+					   <p>1 Listing</p>
+					   <p>30 Days Visibility</p>
+					   <p>10 bids per day</p>
+					   <p>Highlighted in Search Results</p>
+					</div>
+				 </div>
+			  </div>
+		   </div>
+		</div>
+	 </section>
+	 <!-- Pricing Area End -->
+	  
+	  
+	 <!-- Hire-2 Area Start -->
+	 <section class="jobguru-hire-2-area section_70">
+		<div class="container">
+		   <div class="row">
+			  <div class="col-md-8">
+				 <div class="hire-2-box">
+					<h2>The Easiest Way to Get Your New Job</h2>
+				 </div>
+			  </div>
+			  <div class="col-md-4">
+				 <div class="hire-box-2-btn">
+					<a href="#" class="jobguru-btn-2">sign up as freelancer</a>
+				 </div>
+			  </div>
+		   </div>
+		</div>
+	 </section>
+	 <!-- Hire-2 Area End -->
+	  
+	  
+	 <!-- Blog Area Start -->
+	 <section class="jobguru-blog-area section_70">
+		<div class="container">
+		   <div class="row">
+			  <div class="col-md-12">
+				 <div class="site-heading">
+					<h2>Recent From <span>Blog</span></h2>
+					<p>It's easy. Simply post a job you need completed and receive competitive bids from freelancers within minutes</p>
+				 </div>
+			  </div>
+		   </div>
+		   <div class="row">
+			  <div class="col-lg-4 col-md-12">
+				 <a href="#">
+					<div class="single-blog">
+					   <div class="blog-image">
+						  <img src="{% static 'assets/img/blog-1.jpg' %}" alt="blog image" />
+						  <p><span> 21</span> July</p>
+					   </div>
+					   <div class="blog-text">
+						  <h3>If you're having trouble coming up with</h3>
+					   </div>
+					</div>
+				 </a>
+			  </div>
+			  <div class="col-lg-4 col-md-12">
+				 <a href="#">
+					<div class="single-blog">
+					   <div class="blog-image">
+						  <img src="{% static 'assets/img/blog-2.jpg' %}" alt="blog image" />
+						  <p><span> 21</span> July</p>
+					   </div>
+					   <div class="blog-text">
+						  <h3>details about Apple’s new iPad Pro models</h3>
+					   </div>
+					</div>
+				 </a>
+			  </div>
+			  <div class="col-lg-4 col-md-12">
+				 <a href="#">
+					<div class="single-blog">
+					   <div class="blog-image">
+						  <img src="{% static 'assets/img/blog-3.jpg' %}" alt="blog image" />
+						  <p><span> 21</span> July</p>
+					   </div>
+					   <div class="blog-text">
+						  <h3>what are those Steps to be a Successful developer</h3>
+					   </div>
+					</div>
+				 </a>
+			  </div>
+		   </div>
+		</div>
+	 </section>
+	 <!-- Blog Area End -->
+	  
+  
+{% endblock %}

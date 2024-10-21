@@ -1,0 +1,140 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+      <!-- Breadcromb Area Start -->
+      <section class="jobguru-breadcromb-area">
+         <div class="breadcromb-top section_100">
+            <div class="container">
+               <div class="row">
+                  <div class="col-md-12">
+                     <div class="breadcromb-box">
+                        <h3>Register</h3>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div>
+         <div class="breadcromb-bottom">
+            <div class="container">
+               <div class="row">
+                  <div class="col-md-12">
+                     <div class="breadcromb-box-pagin">
+                        <ul>
+                           <li><a href="#">home</a></li>
+                           <li><a href="#">pages</a></li>
+                           <li class="active-breadcromb"><a href="#">Register</a></li>
+                        </ul>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </section>
+      <!-- Breadcromb Area End -->
+       
+       
+      <!-- Login Area Start -->
+      <section class="jobguru-login-area section_70">
+         <div class="container">
+            <div class="row">
+               <div class="col-lg-4 offset-lg-4 col-sm-6 offset-sm-3">
+                  <div class="login-box">
+                     <div class="login-title">
+                        <h3>Sign up</h3>
+                     </div>
+                     <form id="signup-form" method="post">
+                        {% csrf_token %}
+                        <div class="single-login-field">
+                           <input type="email" name="email" placeholder="Email Addresss">
+                        </div>
+                        <div class="single-login-field">
+                           <input type="password" name="password1" placeholder="Choose Password">
+                        </div>
+                        <div class="single-login-field">
+                           <input type="password" name="password2" placeholder="Confirm Password">
+                        </div>
+                        <div class="single-login-field">
+                           <button type="submit">Sign in</button>
+                        </div>
+                     </form>
+                     <div class="dont_have">
+                        <a href="login.html">Already have an account?</a>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </section>
+      <!-- Login Area End -->
+      <script type="text/javascript">
+         $(document).ready(function () {
+             $('#signup-form').on('submit', function (e) {
+                 e.preventDefault();  // Prevent default form submission
+     
+                 var $btn = $('#submit-btn');
+                 $btn.text('Submitting...');  // Change button text
+     
+                 // Get CSRF token
+                 var csrfToken = $('input[name="csrfmiddlewaretoken"]').val();
+     
+                 $.ajax({
+                     type: 'POST',
+                     url: '{% url "register" %}',  // Update to your registration URL
+                     data: $(this).serialize(),  // Serialize form data
+                     headers: {
+                         'X-CSRFToken': csrfToken  // Set CSRF token
+                     },
+                     success: function (response) {
+                         // Show success message in the reusable alert
+                         showAlert('success', 'You have registered successfully. Redirecting...');
+     
+                         // Reset form fields
+                         $btn.text('Sign Up');
+                         $('#signup-form')[0].reset();
+     
+                         // Redirect after 5 seconds
+                         setTimeout(function () {
+                            if (type === 'success') {
+                               alertDiv.removeClass('alert-danger').addClass('alert-success');
+                              } else if (type === 'danger') {
+                                 alertDiv.removeClass('alert-success').addClass('alert-danger');
+                              }
+                              
+                           }, 5000);
+                           setTimeout(function () {
+                                window.location.href = '/';
+                          }, 2000);
+                     },
+                     error: function (xhr, status, error) {
+                         // Show error message in the reusable alert
+                         showAlert('danger', 'There was an error. Please try again.');
+                         $btn.text('Sign Up');  // Reset button text on error
+                     }
+                 });
+             });
+     
+             // Function to show the reusable alert
+             function showAlert(type, message) {
+                 var alertDiv = $('#alert-message');
+                 var alertText = $('#alert-text');
+     
+                 // Set alert class based on the type ('success' or 'danger')
+                 if (type === 'success') {
+                     alertDiv.removeClass('alert-danger').addClass('alert-success');
+                 } else if (type === 'danger') {
+                     alertDiv.removeClass('alert-success').addClass('alert-danger');
+                 }
+     
+                 // Set the message and show the alert
+                 alertText.text(message);
+                 alertDiv.fadeIn();
+     
+                 // Optionally, hide the alert after a few seconds (e.g., 5 seconds)
+                 setTimeout(function () {
+                     alertDiv.fadeOut();
+                 }, 5000);
+             }
+         });
+     </script>
+  {% endblock %}

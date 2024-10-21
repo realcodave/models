@@ -1,0 +1,119 @@
+{% extends 'base.html' %}
+{% load static %}
+   {% block content %}
+      <!-- Breadcromb Area Start -->
+      <section class="jobguru-breadcromb-area">
+         <div class="breadcromb-top section_100">
+            <div class="container">
+               <div class="row">
+                  <div class="col-md-12">
+                     <div class="breadcromb-box">
+                        <h3>Login</h3>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div>
+         <div class="breadcromb-bottom">
+            <div class="container">
+               <div class="row">
+                  <div class="col-md-12">
+                     <div class="breadcromb-box-pagin">
+                        <ul>
+                           <li><a href="#">home</a></li>
+                           <li><a href="#">pages</a></li>
+                           <li class="active-breadcromb"><a href="#">Login</a></li>
+                        </ul>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </section>
+      <!-- Breadcromb Area End -->
+       
+       
+      <!-- Login Area Start -->
+      <section class="jobguru-login-area section_70">
+         <div class="container">
+            <div class="row">
+               <div class="col-lg-4 offset-lg-4 col-sm-6 offset-sm-3">
+                  <div class="login-box">
+                     <div class="login-title">
+                        <h3>Sign in</h3>
+                     </div>
+                     <div id="alert-message" class="alert alert-dismissible fade show" role="alert" style="display: none;">
+                        <p id="alert-text"></p>
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                     <form id="login-form" method="post">
+                        {% csrf_token %}
+                        <div class="single-login-field">
+                           <input type="email" name="email" placeholder="Email Address" required>
+                        </div>
+                        <div class="single-login-field">
+                           <input type="password" name="password" placeholder="Password" required>
+                        </div>
+                        <div class="remember-row single-login-field clearfix">
+                           <p class="checkbox remember">
+                              <input class="checkbox-spin" type="checkbox" id="Freelance">
+                              <label for="Freelance"><span></span>Keep Me Signed In</label>
+                           </p>
+                           <p class="lost-pass">
+                              <a href="#">forgot password?</a>
+                           </p>
+                        </div>
+                        <div class="single-login-field">
+                           <button type="submit">Sign in</button>
+                        </div>
+                     </form>
+                     <div class="dont_have">
+                        <a href="register.html">Don't have an account?</a>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </section>
+      <script  src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+      <script>
+         $(document).ready(function () {
+         $('#login-form').on('submit', function (e) {
+            e.preventDefault();
+
+            var $btn = $('#submit-btn');
+            $btn.text('Logging in...');
+
+            $.ajax({
+                  type: 'POST',
+                  url: '{% url "login" %}',  // Your login URL
+                  data: $(this).serialize(),
+                  headers: {
+                     'X-CSRFToken': $('input[name="csrfmiddlewaretoken"]').val()
+                  },
+                  success: function (response) {
+                     $('#alert-box').removeClass('alert-danger').addClass('alert-success').text(response.message).fadeIn();
+                     if (response.role === 'recruiter') {
+                        setTimeout(function () {
+                              window.location.href = '/employer-dashboard/';
+                        }, 2000);
+                     } else {
+                        setTimeout(function () {
+                              window.location.href = '/candidate-dashboard/';
+                        }, 2000);
+                     }
+                  },
+                  error: function (xhr) {
+                     $('#alert-box').removeClass('alert-success').addClass('alert-danger').text(xhr.responseJSON.error).fadeIn();
+                     $btn.text('Login');
+                  }
+            });
+         });
+      });
+
+      </script>
+      <!-- Login Area End -->
+       
+       
+{% endblock %}

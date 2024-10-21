@@ -1,0 +1,275 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+      <!-- Breadcromb Area Start -->
+      <section class="jobguru-breadcromb-area">
+         <div class="breadcromb-top section_100">
+            <div class="container">
+               <div class="row">
+                  <div class="col-md-12">
+                     <div class="breadcromb-box">
+                        <h3>Dashboard</h3>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div>
+         <div class="breadcromb-bottom">
+            <div class="container">
+               <div class="row">
+                  <div class="col-md-12">
+                     <div class="breadcromb-box-pagin">
+                        <ul>
+                           <li><a href="#">home</a></li>
+                           <li><a href="#">candidates</a></li>
+                           <li class="active-breadcromb"><a href="#">Dashboard</a></li>
+                        </ul>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </section>
+      <!-- Breadcromb Area End -->
+       
+       
+      <!-- Candidate Dashboard Area Start -->
+      <section class="candidate-dashboard-area section_70">
+         <div class="container">
+            <div class="row">
+               {% include 'dashboard_menu.html' %}
+               <div class="col-lg-9 col-md-8">
+                  <form id="modelProfileForm" enctype="multipart/form-data">
+                     {% csrf_token %}
+                  <div class="dashboard-right">
+                     <div class="candidate-profile">
+                        <div class="candidate-single-profile-info">
+                           <div class="single-resume-feild resume-avatar">
+                              <div class="resume-image">
+                                    
+                                 <img src="{% static 'assets/img/author.jpg' %}" id="image" alt="resume avatar">
+                                 <div class="resume-avatar-hover">
+                                    <div class="resume-avatar-upload">
+                                       <p>
+                                          <i class="fa fa-pencil"></i>
+                                          Edit
+                                       </p>
+                                       <input type="file" name="image" id="image_file">
+                                    </div>
+                                 </div>
+                              </div>
+                           </div>
+                        </div>
+                        <div class="candidate-single-profile-info">
+                              <div class="resume-box">
+                                 <h3>My Profile</h3>
+                                 <div class="single-resume-feild feild-flex-2">
+                                    <div class="single-input">
+                                       <label for="name">Your Name:</label>
+                                       <input type="text" name="fullname" placeholder="Fullname" id="fullname" required>
+                                    </div>
+                                    <div class="single-input">
+                                       <label for="height">Height:</label>
+                                       <input type="text" name="height" placeholder="Height" maxlength="10" id="height" required>
+                                    </div>
+                                    
+                                 </div>
+                                 <div class="single-resume-feild feild-flex-2">
+                                    <div class="single-input">
+                                       <label for="p_title">Hobby:</label>
+                                       <input type="text" name="hobby" placeholder="Hobby" maxlength="255" id="hobby" required>
+                                    </div>
+                                    <div class="single-input">
+                                       <label for="nationality">Nationality:</label>
+                                       <input type="text" name="nationality" placeholder="Nationality" maxlength="255" id="nationality" required>
+                                    </div>
+                                    
+                                 </div>
+                                 <div class="single-resume-feild feild-flex-2">
+                                    <div class="single-input">
+                                       <label for="language">Languages:</label>
+                                       <select id="language" name="language">
+                                          <option value="English" selected>English</option>
+                                          <option value="French">French</option>
+                                       </select>
+                                    </div>
+                                    <div class="single-input">
+                                       <label for="gender">Gender:</label>
+                                       <select id="gender" name="gender">
+                                          <option value="Male" selected>Male</option>
+                                          <option value="Female">Female</option>
+                                       </select>
+                                    </div>
+                                    <div class="single-input">
+                                       <label for="location">City:</label>
+                                       <input type="text" name="location" placeholder="City" id="location">
+                                    </div>
+                                 </div>
+                                 <div class="single-resume-feild feild-flex-2">
+                                    <div class="single-input">
+                                       <label for="address">Address:</label>
+                                       <input type="text" name="address" placeholder="Address" id="address">
+                                    </div>
+                                    <div class="single-input">
+                                       <label for="dob"> Date Of Birth:</label>
+                                       <input type="date" name="dob" id="dob">
+                                    </div>
+                                    <div class="single-input">
+                                       <label for="occuption"> Occuption:</label>
+                                       <input type="text" name="occuption" id="occuption">
+                                    </div>
+                                 </div>
+                                 <div class="single-resume-feild ">
+                                    <div class="single-input">
+                                       <label for="Bio">Introduce Yourself:</label>
+                                       <textarea id="Bio" name="bio"></textarea>
+                                    </div>
+                                 </div>
+                              </div>
+                              <div class="resume-box">
+                                 <h3>Contact Information</h3>
+                                 <div class="single-resume-feild feild-flex-2">
+                                    <div class="single-input">
+                                       <label for="Phone">Phone:</label>
+                                       <input type="text" name="phone_number" placeholder="+234 --- --- ---" id="Phone">
+                                    </div>
+                                    
+                                 </div>
+                                 <!-- <div class="single-resume-feild feild-flex-2">
+                                    <div class="single-input">
+                                       <label for="contry">contry:</label>
+                                       <select id="contry">
+                                          <option>Arab Amirats</option>
+                                          <option>America</option>
+                                          <option>Netherlands</option>
+                                          <option>Russia</option>
+                                          <option selected>Bangladesh</option>
+                                          <option>India</option>
+                                          <option>Pakistan</option>
+                                          <option>Brazil</option>
+                                          <option>Africa</option>
+                                       </select>
+                                    </div>
+                                    <div class="single-input">
+                                       <label for="City">City:</label>
+                                       <input type="text" value="Dhaka" id="City">
+                                    </div>
+                                 </div>
+                                 <div class="single-resume-feild feild-flex-2">
+                                    <div class="single-input">
+                                       <label for="Zip">Zip:</label>
+                                       <input type="text" value="6100" id="Zip">
+                                    </div>
+                                    <div class="single-input">
+                                       <label for="Address22">Address:</label>
+                                       <input type="text" value="New york city,22/A Street,01" id="Address22">
+                                    </div>
+                                 </div> -->
+                              </div>
+                              <div class="resume-box">
+                                 <h3>social link</h3>
+                                 <div class="single-resume-feild feild-flex-2">
+                                    <div class="single-input">
+                                       <label for="twitter">
+                                       <i class="fa fa-twitter twitter"></i>
+                                       twitter
+                                       </label>
+                                       <input type="text" placeholder="Twitter Link" id="twitter" name="x">
+                                    </div>
+                                    <div class="single-input">
+                                       <label for="twitter">
+                                       <i class="fa fa-facebook facebook"></i>
+                                       facebook
+                                       </label>
+                                       <input type="text" placeholder="Facebook Link" id="facebook" name="facebook">
+                                    </div>
+                                 </div>
+                                 <div class="single-resume-feild feild-flex-2">
+                                    <div class="single-input">
+                                       <label for="instagram">
+                                       <i class="fa fa-instagram instagram text-danger"></i>
+                                       Instagram
+                                       </label>
+                                       <input type="text" placeholder="Instagram Link" id="instagram" name="instagram">
+                                    </div>
+                                    <div class="single-input">
+                                       <label for="linkedin">
+                                       <i class="fa fa-linkedin linkedin"></i>
+                                       Linkedin
+                                       </label>
+                                       <input type="text" placeholder="LinkedIn Link" id="linkedin" name="twitter">
+                                    </div>
+                                 </div>
+                              </div>
+                              <div class="submit-resume">
+                                 <button type="submit">Update</button>
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+               </form>
+               </div>
+            
+         </div>
+      </section>
+      <!-- Candidate Dashboard Area End -->
+      <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+      <script>
+      $(document).ready(function() {
+          // Fetch existing profile data on page load
+          $.ajax({
+              url: '/fetch_model_profile/', // URL to fetch existing profile data
+              method: 'GET',
+              success: function(data) {
+                  // Populate the form fields with the existing data
+                  $('#fullname').val(data.fullname);
+                  $('#height').val(data.height);
+                  $('#hobby').val(data.hobby);
+                  $('#nationality').val(data.nationality);
+                  $('#language').val(data.language);
+                  $('#location').val(data.location);
+                  $('#address').val(data.address);
+                  $('#dob').val(data.dob);
+                  $('#occuption').val(data.occuption);
+                  $('#gender').val(data.gender);
+                  $('#gender').change();
+                  $('#Bio').val(data.bio);
+                  $('#Phone').val(data.phone_number);
+                  $('#twitter').val(data.twitter);
+                  $('#facebook').val(data.facebook);
+                  $('#instagram').val(data.instagram);
+                  $('#linkedin').val(data.linkedin);
+                  $('#image').attr('src', data.image);               
+              }
+          });
+      
+          // Handle form submission
+          $('#modelProfileForm').on('submit', function(e) {
+              e.preventDefault(); // Prevent the default form submission
+      
+              var formData = new FormData(this); // Create a FormData object
+      
+              $.ajax({
+                  url: '/profile/', // URL to send the updated data
+                  method: 'POST',
+                  data: formData,
+                  processData: false, // Important for FormData
+                  contentType: false, // Important for FormData
+                  success: function(response) {
+                      alert('Profile updated successfully!');
+                      // Optionally, redirect or update the UI further
+                      setTimeout(function() {
+                        location.reload(); // Reload the current page
+                     }, 1000);
+                  },
+                  error: function(xhr, status, error) {
+                      alert('Error updating profile: ' + error);
+                  }
+              });
+          });
+      });
+      </script>
+      
+{% endblock %}

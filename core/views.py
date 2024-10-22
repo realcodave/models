@@ -2,8 +2,9 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import login, logout, authenticate
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
-from .forms import SignUpForm, LoginForm, ModelProfileForm
-from .models import ModelProfile
+from .forms import SignUpForm, LoginForm, ModelProfileForm, GalleryForm
+from .models import ModelProfile, Gallery, CustomUser
+from django.contrib.auth.decorators import login_required
 
 # Create your views here.
 def index(request):
@@ -15,6 +16,7 @@ def aboutUs(request):
 
 def casting(request):
     return render(request, 'casting.html', {})
+
 
 def model_dashboard(request):
     return render(request,'model-dashboard.html', {})
@@ -44,6 +46,27 @@ def fetch_model_profile(request):
     }
     return JsonResponse(data)
 
+@csrf_exempt  # Consider using this carefully in production
+def fetch_model_gallery(request, user_id=None):
+    # Allow fetching of another user's gallery if user_id is provided
+    if user_id:
+        user = CustomUser.objects.filter(id=user_id).first()
+        if not user:
+            return JsonResponse({'error': 'User not found'}, status=404)
+    else:
+        user = request.user
+
+    # Fetch the gallery images for the specific user
+    model_gallery = Gallery.objects.filter(user=user)
+    
+    if not model_gallery.exists():
+        data = {'images': []}  # Return empty list if no images found
+    else:
+        data = {'images': [gallery.image.url for gallery in model_gallery if gallery.image]}
+
+    return JsonResponse(data)
+
+@login_required
 def model_profile(request):
     if request.method == 'POST':
         model_profile = get_object_or_404(ModelProfile, user=request.user)
@@ -60,8 +83,42 @@ def model_profile(request):
         
         # Render the profile page with the form
         return render(request, 'model-profile.html', {'form': form})
-    
 
+
+
+def gallery(request, user_id):
+    user = get_object_or_404(CustomUser, pk=user_id)  # Get the user whose gallery we want to display
+    
+    if request.method == 'POST' and request.user.is_authenticated and request.user == user:
+        form = GalleryForm(request.POST, request.FILES)
+        if form.is_valid():
+            gallery_item = form.save(commit=False)
+            gallery_item.user = request.user  # Save with the logged-in user
+            gallery_item.save()
+            return JsonResponse({'success': True})
+        else:
+            return JsonResponse({'success': False, 'errors': form.errors}, status=400)
+    
+    else:
+        # Handle GET request
+        form = GalleryForm() if request.user == user else None  # Show form only for the gallery owner
+        gallery = Gallery.objects.filter(user=user)  # Get the gallery of the requested user
+        profile = ModelProfile.objects.filter(user=user).first()
+        fullname = None
+        image = None
+        if profile.image:
+            image = profile.image.url
+        if profile.fullname: 
+            fullname = profile.fullname
+        return render(request, 'gallery.html', {
+            'form': form,
+            'gallery': gallery,
+            'owner': user,  # Pass the gallery owner to the template
+            'fullname': fullname,
+            'image': image,
+        })
+
+    
 def signup_view(request):
     if request.method == 'POST':
         form = SignUpForm(request.POST)
@@ -112,7 +169,7 @@ def login_view(request):
     else:
         form = LoginForm()
     return render(request, 'login.html', {'form': form})
-
+@login_required
 def userLogout(request):
     logout(request)
     return redirect('login')

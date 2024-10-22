@@ -70,8 +70,10 @@
 			{% for model in models %}
 			  <div class="col-lg-4 col-md-6">
 				<div class="card">
-					<img src="{{ model.image.url }}" class="card-img-top img-fluid fixed-image" alt="Model Image">
-					<div class="card-body">
+					<a href="{% url 'gallery' model.user.pk %}">
+						<img src="{{ model.image.url }}" class="card-img-top img-fluid fixed-image" alt="Model Image">
+					</a>
+						<div class="card-body">
 						<h5 class="card-title">Name: {{model.fullname}}</h5>
 						<p class="card-text">{{model.bio|truncatewords:50}}</p>
 						<ul class="list-group list-group-flush">

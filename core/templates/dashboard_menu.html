@@ -13,8 +13,10 @@
              My Profile
              </a>
           </li>
-          <li><a href="message.html"><i class="fa fa-image"></i>Gallery</a></li>
-          <li><a href="message.html"><i class="fa fa-envelope-open"></i>messages</a></li>
+          <li class="{% if request.path == request.user.get_gallery_url %}active{% endif %}">
+            <a href="{% url 'gallery' request.user.pk %}"><i class="fa fa-image"></i>Gallery</a>
+        </li>          
+        <li><a href="message.html"><i class="fa fa-envelope-open"></i>messages</a></li>
           <li><a href="manage-jobs.html"><i class="fa fa-briefcase"></i>manage jobs</a></li>
           <li><a href="candidate-earnings.html"><i class="fa fa-rocket"></i>earnings</a></li>
           <li><a href="change-password.html"><i class="fa fa-lock"></i>change password</a></li>

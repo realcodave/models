@@ -1,0 +1,208 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<style>
+   .gallery-img {
+       width: 100%;
+       height: 200px;
+       object-fit: cover;
+       margin-bottom: 15px;
+   }
+   .gallery-image {
+       padding: 10px;
+   }
+
+   /* Modal for full-screen image */
+   .modal {
+       display: none;
+       position: fixed;
+       z-index: 1000;
+       padding-top: 100px;
+       left: 0;
+       top: 0;
+       width: 100%;
+       height: 100%;
+       overflow: auto;
+       background-color: rgba(0,0,0,0.9);
+   }
+
+   .modal-content {
+       margin: auto;
+       display: block;
+       max-width: 80%;
+   }
+
+   .close {
+       position: absolute;
+       top: 20px;
+       right: 35px;
+       color: white;
+       font-size: 40px;
+       font-weight: bold;
+       cursor: pointer;
+   }
+
+   @media only screen and (max-width: 700px) {
+       .modal-content {
+           width: 100%;
+       }
+   }
+</style>
+
+<!-- Breadcrumb Area Start -->
+<section class="jobguru-breadcromb-area">
+   <div class="breadcromb-top section_100">
+      <div class="container">
+         <div class="row">
+            <div class="col-md-12">
+               <div class="breadcromb-box">
+                  <h3>Gallery of {% if fullname %}
+                     {{ fullname }}
+                 {% else %}
+                     {{owner.username}}
+                 {% endif %}</h3>
+               </div>
+            </div>
+         </div>
+      </div>
+   </div>
+</section>
+<!-- Breadcrumb Area End -->
+
+<!-- Candidate Dashboard Area Start -->
+<section class="candidate-dashboard-area section_70">
+   <div class="container">
+      <div class="row">
+         {% if request.user.is_authenticated %}
+         {% include 'dashboard_menu.html' %}
+         {% endif %}
+         <div class="col-lg-9 col-md-8">
+            <div class="dashboard-right">
+               <div class="candidate-profile">
+                  <div class="candidate-single-profile-info">
+                     <div class="single-resume-feild resume-avatar">
+                        
+                        {% if request.user.is_authenticated and request.user == owner %}
+                        <!-- Only show the upload form if the logged-in user owns this gallery -->
+                        <form id="modelGalleryForm" enctype="multipart/form-data">
+                              {% csrf_token %}
+                           <div class="resume-image">
+                              <img src="{% if image %}{{image}}{% else %}{% static 'assets/img/image.jpg' %}{% endif %}" id="image" alt="resume avatar">
+                              <div class="resume-avatar-hover">
+                                 <div class="resume-avatar-upload">
+                                    <p>
+                                       <i class="fa fa-pencil"></i>
+                                       Add Image
+                                    </p>
+                                    <input type="file" name="image" id="image_file">
+                                 </div>
+                              </div>
+                           </div>
+                        </form>
+                        {% endif %}
+                        
+                     </div>
+                  </div>
+                  <div id="galleryContainer" class="row">
+                     <!-- Dynamically loaded gallery images -->
+                     {% for item in gallery %}
+                         <div class="col-lg-4 col-md-6 col-sm-12 gallery-image">
+                             <img src="{{ item.image.url }}" class="img-fluid gallery-img" alt="Gallery Image" data-full="{{ item.image.url }}">
+                         </div>
+                     {% empty %}
+                         <p>No images in this gallery yet.</p>
+                     {% endfor %}
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+   </div>
+</section>
+<!-- Candidate Dashboard Area End -->
+
+<!-- Modal for Fullscreen Image -->
+<div id="imageModal" class="modal">
+   <span class="close">&times;</span>
+   <img class="modal-content" id="modalImage">
+</div>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+   $(document).ready(function() {
+       // Preview selected image and automatically submit form
+       $('#image_file').on('change', function() {
+           var file = this.files[0];
+
+           if (file) {
+               var reader = new FileReader();
+               reader.onload = function(e) {
+                   $('#image').attr('src', e.target.result); // Preview image
+               }
+               reader.readAsDataURL(file);
+           }
+
+           // Automatically submit the form
+           $('#modelGalleryForm').submit();
+       });
+
+       // Handle form submission for image upload
+       $('#modelGalleryForm').on('submit', function(e) {
+           e.preventDefault();
+
+           var formData = new FormData(this);
+
+           $.ajax({
+               url: '{% url "gallery" owner.pk %}',  // URL for the image upload endpoint
+               type: 'POST',
+               data: formData,
+               processData: false,
+               contentType: false,
+               success: function(response) {
+                   if (response.success) {
+                       fetchGallery();  // Refresh the gallery after successful upload
+                   } else {
+                       alert('Image upload failed. ' + response.errors);
+                   }
+               },
+               error: function(xhr, status, error) {
+                   console.log('Error: ' + error);
+               }
+           });
+       });
+
+       // Fetch the gallery images when the page loads
+       function fetchGallery() {
+           $.ajax({
+               url: '{% url "gallery" owner.pk %}',  // URL for fetching gallery images
+               type: 'GET',
+               success: function(response) {
+                   // Process and update the gallery dynamically
+               },
+               error: function(xhr, status, error) {
+                   console.log('Error fetching images: ' + error);
+               }
+           });
+       }
+
+       // Modal functionality
+       $('.gallery-img').on('click', function() {
+           var fullImageUrl = $(this).attr('data-full');
+           $('#modalImage').attr('src', fullImageUrl);
+           $('#imageModal').css('display', 'block');
+       });
+
+       $('.close').on('click', function() {
+           $('#imageModal').css('display', 'none');
+       });
+
+       $(window).on('click', function(event) {
+           if ($(event.target).is('#imageModal')) {
+               $('#imageModal').css('display', 'none');
+           }
+       });
+   });
+</script>
+
+{% endblock %}

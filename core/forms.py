@@ -1,6 +1,6 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
-from .models import CustomUser, ModelProfile
+from .models import CustomUser, ModelProfile, Gallery
 
 class SignUpForm(UserCreationForm):
     email = forms.EmailField(required=True)
@@ -36,3 +36,7 @@ class ModelProfileForm(forms.ModelForm):
             'dob': forms.DateInput(attrs={'type': 'date'}),
             'bio': forms.Textarea(attrs={'rows': 4}),
         }
+class GalleryForm(forms.ModelForm):
+    class Meta:
+        model = Gallery
+        fields = ['image']

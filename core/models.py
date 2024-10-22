@@ -33,9 +33,11 @@ class ModelProfile(models.Model):
     def __str__(self):
         return self.user.username
     
-class Images(models.Model):
+
+
+class Gallery(models.Model):
+    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
     image = models.ImageField(upload_to='media/images/')
-
+    
     def __str__(self):
-        return self.image
-
+        return self.user.username

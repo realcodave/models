@@ -1,18 +1,19 @@
 <div class="col-lg-3 col-md-4 dashboard-left-border">
     <div class="dashboard-left">
        <ul class="dashboard-menu">
-          <li>
+          <li class="{% if request.path == '/dashboard/' %}active{% endif %}">
              <a href="{% url 'dashboard' %}">
              <i class="fa fa-tachometer"></i>
              Dashboard
              </a>
           </li>
-          <li class="">
+          <li class="{% if request.path == '/profile/' %}active{% endif %}">
              <a href="{% url 'profile' %}">
              <i class="fa fa-users"></i>
              My Profile
              </a>
           </li>
+          <li><a href="message.html"><i class="fa fa-image"></i>Gallery</a></li>
           <li><a href="message.html"><i class="fa fa-envelope-open"></i>messages</a></li>
           <li><a href="manage-jobs.html"><i class="fa fa-briefcase"></i>manage jobs</a></li>
           <li><a href="candidate-earnings.html"><i class="fa fa-rocket"></i>earnings</a></li>

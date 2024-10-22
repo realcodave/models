@@ -94,15 +94,11 @@
                   },
                   success: function (response) {
                      $('#alert-box').removeClass('alert-danger').addClass('alert-success').text(response.message).fadeIn();
-                     if (response.role === 'recruiter') {
+                     
                         setTimeout(function () {
-                              window.location.href = '/employer-dashboard/';
+                              window.location.href = '/profile/';
                         }, 2000);
-                     } else {
-                        setTimeout(function () {
-                              window.location.href = '/candidate-dashboard/';
-                        }, 2000);
-                     }
+                     
                   },
                   error: function (xhr) {
                      $('#alert-box').removeClass('alert-success').addClass('alert-danger').text(xhr.responseJSON.error).fadeIn();

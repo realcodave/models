@@ -2,9 +2,26 @@
 {% load static %}
 
 {% block content %}
+
+<style>
+	.fixed-image {
+    width: 100%; /* Ensures the image takes the full width of the card */
+    height: 250px; /* Set a fixed height */
+    object-fit: cover; /* Ensures the image scales properly without distortion */
+}
+.card {
+    height: 100%; /* Ensures all cards take the same height */
+}
+
+.card-body {
+    height: 200px; /* Fixed height for the card content */
+    overflow: hidden; /* Prevents overflow if content is too long */
+    text-overflow: ellipsis; /* Adds an ellipsis (...) if the text is too long */
+}
+</style>
 	
       <!--Home Video Start-->
-      <section class="home-video-banner parallax" data-jarallax-video="https://www.youtube.com/watch?v=dk9uNWPP7EA">
+      <section class="home-video-banner parallax" data-jarallax-video="https://www.youtube.com/watch?v=F2_mMD4GrhM&pp=ygUZbW9kZWxzIGZyZWUgc3RvY2sgZm9vdGFnZQ%3D%3D">
 		<div class="banner-area">
 		   <div class="banner-caption container">
 			  <div class="container">
@@ -53,7 +70,7 @@
 			{% for model in models %}
 			  <div class="col-lg-4 col-md-6">
 				<div class="card">
-					<img src="{{model.image.url}}" class="card-img-top" alt="Model Image">
+					<img src="{{ model.image.url }}" class="card-img-top img-fluid fixed-image" alt="Model Image">
 					<div class="card-body">
 						<h5 class="card-title">Name: {{model.fullname}}</h5>
 						<p class="card-text">{{model.bio|truncatewords:50}}</p>
